@@ -8,7 +8,7 @@ function getClient(): Composio {
   if (!client) {
     const apiKey = process.env.COMPOSIO_API_KEY;
     if (!apiKey) throw new Error("COMPOSIO_API_KEY is not set");
-    client = new Composio({ apiKey });
+    client = new Composio({ apiKey, toolkitVersions: { apollo: "latest" } });
   }
   return client;
 }
