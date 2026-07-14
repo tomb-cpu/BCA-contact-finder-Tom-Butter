@@ -14,7 +14,6 @@ function getClient(): Composio {
 }
 
 const userId = () => process.env.COMPOSIO_USER_ID || "default";
-const connectedAccountId = () => process.env.COMPOSIO_APOLLO_CONNECTED_ACCOUNT_ID;
 
 interface ApolloOrganization {
   id: string;
@@ -45,11 +44,9 @@ async function executeTool<T = unknown>(
   args: Record<string, unknown>
 ): Promise<T> {
   const composio = getClient();
-  const account = connectedAccountId();
   const result = await composio.tools.execute(slug, {
     userId: userId(),
     dangerouslySkipVersionCheck: true,
-    ...(account ? { connectedAccountId: account } : {}),
     arguments: args,
   });
   if (result && (result as { successful?: boolean }).successful === false) {
