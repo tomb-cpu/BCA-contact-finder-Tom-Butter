@@ -46,6 +46,7 @@ async function executeTool<T = unknown>(
   const composio = getClient();
   const result = await composio.tools.execute(slug, {
     userId: userId(),
+    dangerouslySkipVersionCheck: true,
     arguments: args,
   });
   if (result && (result as { successful?: boolean }).successful === false) {
