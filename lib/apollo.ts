@@ -8,7 +8,7 @@ function getClient(): Composio {
   if (!client) {
     const apiKey = process.env.COMPOSIO_API_KEY;
     if (!apiKey) throw new Error("COMPOSIO_API_KEY is not set");
-    client = new Composio({ apiKey, toolkitVersions: { apollo: "latest" } });
+    client = new Composio({ apiKey });
   }
   return client;
 }
@@ -48,7 +48,7 @@ async function executeTool<T = unknown>(
   const account = connectedAccountId();
   const result = await composio.tools.execute(slug, {
     userId: userId(),
-    version: "latest",
+    dangerouslySkipVersionCheck: true,
     ...(account ? { connectedAccountId: account } : {}),
     arguments: args,
   });
